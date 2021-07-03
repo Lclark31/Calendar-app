@@ -4,6 +4,10 @@ body {
   line-height: 1;
 }
 
+.container {
+  padding-bottom: 20px;
+}
+
 textarea {
   background: transparent;
   border: none;

@@ -5,13 +5,9 @@ let newEventEl;
 let eventArray = [];
 let timesArray = [];
 
-// compare each time to the current time and adjust classes accordingly
-// color-code time blocks for if they're present, future, or past
-// change class attributes dependent on current time
 function updateTime() {
-  $(`#currentDay`).text(moment().format(`dddd, MMMM Do YYYY`)); // KEEP THIS
+  $(`#currentDay`).text(moment().format(`dddd, MMMM Do YYYY`));
   timeEl = $(`.hour`);
-  console.log(timeEl);
 
   for (i = 0; i < $(`.hour`).length; i++) {
     time = $(`.hour`)[i].innerHTML;
@@ -37,9 +33,9 @@ function updateTime() {
   }
 }
 
-updateTime();
-
 function editEvent() {
+  updateTime();
+
   text = $(this).text().trim();
   inputEl = $(`<textarea>`).addClass(`description col-10`).val(text);
 
@@ -90,3 +86,5 @@ function pullEvents() {
 $(window).on(`load`, pullEvents);
 $(calendarEventEl).on(`click`, editEvent);
 $(`.icon`).on(`click`, saveEvent);
+
+updateTime();
