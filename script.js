@@ -12,7 +12,6 @@ function updateTime() {
   for (i = 0; i < $(`.hour`).length; i++) {
     time = $(`.hour`)[i].innerHTML;
     timesArray.push(time);
-    localStorage.setItem(`Times`, JSON.stringify(timesArray));
   }
 
   for (i = 0; i < $(`.hour`).length; i++) {
