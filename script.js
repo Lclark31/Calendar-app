@@ -9,18 +9,31 @@ let timesArray = [];
 // color-code time blocks for if they're present, future, or past
 // change class attributes dependent on current time
 function updateTime() {
-  $(`#currentDay`).text(moment().format(`dddd, MMMM Do YYYY`));
-  timeEl = $(`.hour`)[0];
+  $(`#currentDay`).text(moment().format(`dddd, MMMM Do YYYY`)); // KEEP THIS
+  timeEl = $(`.hour`);
+  console.log(timeEl);
+
   for (i = 0; i < $(`.hour`).length; i++) {
     time = $(`.hour`)[i].innerHTML;
     timesArray.push(time);
     localStorage.setItem(`Times`, JSON.stringify(timesArray));
   }
-  timesArray = JSON.parse(localStorage.getItem(`Times`));
-  time = moment(timesArray[1], `hA`);
-  if (moment().isAfter(time, `hour`)) {
-    $(`.9AM`).addClass(`present`);
-  } else if (time.isAfter(moment())) {
+
+  for (i = 0; i < $(`.hour`).length; i++) {
+    time = moment(timesArray[i], `hA`);
+    let calendarTimes = timeEl[i];
+
+    if (moment().isAfter(time, `hour`));
+    let timesToCompare = $(`.hour`)[i].innerHTML;
+    let convertedTimesToCompare = moment(timesToCompare, 'hA');
+
+    if (moment().isAfter(convertedTimesToCompare, `hour`)) {
+      calendarTimes.classList.add(`past`);
+    } else if (moment().isSame(convertedTimesToCompare, `hour`)) {
+      calendarTimes.classList.add(`present`);
+    } else {
+      calendarTimes.classList.add(`future`);
+    }
   }
 }
 
@@ -44,7 +57,7 @@ function blurredEvent() {
   $(`.icon`).removeClass(`fa-lock`);
   $(`.icon`).addClass(`fa-lock-open`);
 
-  newEventEl = $(`<div>`).addClass(`col-10 past description `);
+  newEventEl = $(`<div>`).addClass(`col-10 description event`);
   newEventEl.text($(`textarea`).val());
 
   $(`textarea`).replaceWith(newEventEl);
@@ -65,6 +78,9 @@ function saveEvent() {
 function pullEvents() {
   eventArray = JSON.parse(localStorage.getItem(`Events`));
 
+  if (eventArray === null) {
+    return;
+  }
   for (i = 0; i, i < eventArray.length; i++) {
     let oldEvents = calendarEventEl[i];
     oldEvents.innerHTML = eventArray[i];
